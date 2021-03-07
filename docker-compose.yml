@@ -1,0 +1,39 @@
+version: '3'
+volumes:
+  volback:
+  volfront:
+  voldb: {}
+services:
+  backend:
+    build: ./backend
+    environment:
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/usr/src/app/backend
+      - volback:/usr/src/app/backend/node_modules
+    depends_on:
+      - db
+    tty: true
+  frontend:
+    build: ./frontend
+    environment:
+      NODE_ENV: development
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/usr/src/app/frontend
+      - volfront:/usr/src/app/frontend/node_modules
+    tty: true
+  db:
+    build: ./db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: faceappdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+      - voldb:/var/lib/postgresql/data
