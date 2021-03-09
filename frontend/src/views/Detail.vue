@@ -7,10 +7,16 @@
     </b-row>
     <b-row>
       <b-col class="mt-5">
-        <b-alert show variant="primary"
-          >Bootstrap Vue {{ $route.params.id }}
-        </b-alert>
-        <UserDetail v-bind="{ userId: $route.params.id }" />
+        <b-card
+          header="ユーザー情報"
+          header-tag="header"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <b-card-text>
+            <UserDetail v-bind="{ userId: $route.params.id }" />
+          </b-card-text>
+        </b-card>
       </b-col>
     </b-row>
   </b-container>
