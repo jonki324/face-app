@@ -2,10 +2,10 @@
   <b-table striped hover :items="users" :fields="fields">
     <template #cell(action)="row">
       <router-link :to="{ name: 'Detail', params: { id: row.item.id } }">
-        <b-button variant="primary">Detail</b-button>
+        <b-button variant="info">Detail</b-button>
       </router-link>
       <b-button variant="success" to="/about">Edit</b-button>
-      <b-button variant="danger" to="/about">Delete</b-button>
+      <b-button variant="danger" @click="delUser(row.item.id)">Delete</b-button>
     </template>
   </b-table>
 </template>
@@ -19,10 +19,26 @@ export default {
       fields: ["id", "name", "email", "action"],
     };
   },
+  methods: {
+    getUsers() {
+      this.axios.get("http://localhost:3000/api/user").then((res) => {
+        this.users = res.data;
+      });
+    },
+    delUser(id) {
+      this.axios
+        .delete(`http://localhost:3000/api/user/${id}`)
+        .then((res) => {
+          console.log(res);
+          this.getUsers();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
   mounted() {
-    this.axios.get("http://localhost:3000/api/user").then((res) => {
-      this.users = res.data;
-    });
+    this.getUsers();
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col class="mt-4">
-        <PageHeader title="User Detail" />
+        <PageHeader title="Add New User" />
       </b-col>
     </b-row>
     <b-row>
@@ -14,7 +14,7 @@
           header-text-variant="white"
         >
           <b-card-text>
-            <UserDetail v-bind="{ userId: $route.params.id }" />
+            <UserAdd />
           </b-card-text>
         </b-card>
       </b-col>
@@ -24,12 +24,12 @@
 
 <script>
 import PageHeader from "@/components/PageHeader.vue";
-import UserDetail from "@/components/UserDetail.vue";
+import UserAdd from "@/components/UserAdd.vue";
 export default {
-  name: "Detail",
+  name: "Add",
   components: {
     PageHeader,
-    UserDetail,
+    UserAdd,
   },
 };
 </script>

@@ -2,12 +2,15 @@
   <b-container>
     <b-row>
       <b-col class="mt-4">
-        <PageHeader title="Home Page Title" />
+        <PageHeader title="User List" />
       </b-col>
     </b-row>
     <b-row>
       <b-col class="mt-5">
         <UserTable />
+        <router-link :to="{ name: 'Add' }">
+          <b-button variant="primary">Add New User</b-button>
+        </router-link>
       </b-col>
     </b-row>
   </b-container>
