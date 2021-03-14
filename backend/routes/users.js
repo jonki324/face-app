@@ -34,8 +34,8 @@ router.post('/', function (req, res, next) {
   });
 });
 
-router.put('/', function (req, res, next) {
-  const id = req.body.id;
+router.put('/:id', function (req, res, next) {
+  const id = req.params.id;
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;

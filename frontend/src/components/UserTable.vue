@@ -4,7 +4,9 @@
       <router-link :to="{ name: 'Detail', params: { id: row.item.id } }">
         <b-button variant="info">Detail</b-button>
       </router-link>
-      <b-button variant="success" to="/about">Edit</b-button>
+      <router-link :to="{ name: 'Update', params: { id: row.item.id } }">
+        <b-button variant="success">Edit</b-button>
+      </router-link>
       <b-button variant="danger" @click="delUser(row.item.id)">Delete</b-button>
     </template>
   </b-table>
