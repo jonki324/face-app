@@ -16,8 +16,21 @@
         plaintext
       ></b-form-input>
     </b-form-group>
-    <b-form-group label="Role:" label-for="role" label-cols="1">
-      <b-form-input id="role" v-model="form.role" plaintext></b-form-input>
+    <b-form-group
+      label="Role:"
+      label-for="role"
+      label-cols="1"
+      v-slot="{ ariaDescribedby }"
+    >
+      <b-form-radio-group
+        v-model="form.role"
+        :options="roles"
+        value-field="id"
+        text-field="name"
+        :aria-describedby="ariaDescribedby"
+        class="pt-2"
+        disabled
+      ></b-form-radio-group>
     </b-form-group>
   </div>
 </template>
@@ -37,19 +50,37 @@ export default {
         password: "",
         role: "",
       },
+      roles: [],
     };
   },
+  methods: {
+    getUsers() {
+      let url = `http://localhost:3000/api/user/${this.userId}`;
+      this.axios.get(url).then((res) => {
+        console.log(res.data);
+        let user = res.data[0];
+        this.form.id = user.id;
+        this.form.name = user.name;
+        this.form.email = user.email;
+        this.form.password = user.password;
+        this.form.role = user.role_id;
+      });
+    },
+    getRoles() {
+      const url = "http://localhost:3000/api/role/";
+      this.axios
+        .get(url)
+        .then((res) => {
+          this.roles = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
   mounted() {
-    let url = `http://localhost:3000/api/user/${this.userId}`;
-    this.axios.get(url).then((res) => {
-      console.log(res.data);
-      let user = res.data[0];
-      this.form.id = user.id;
-      this.form.name = user.name;
-      this.form.email = user.email;
-      this.form.password = user.password;
-      this.form.role = user.role_id;
-    });
+    this.getUsers();
+    this.getRoles();
   },
 };
 </script>

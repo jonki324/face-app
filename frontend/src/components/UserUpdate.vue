@@ -12,8 +12,20 @@
     <b-form-group label="Password:" label-for="password" label-cols="1">
       <b-form-input id="password" v-model="form.password"></b-form-input>
     </b-form-group>
-    <b-form-group label="Role:" label-for="role" label-cols="1">
-      <b-form-input id="role" v-model="form.role"></b-form-input>
+    <b-form-group
+      label="Role:"
+      label-for="role"
+      label-cols="1"
+      v-slot="{ ariaDescribedby }"
+    >
+      <b-form-radio-group
+        v-model="form.role"
+        :options="roles"
+        value-field="id"
+        text-field="name"
+        :aria-describedby="ariaDescribedby"
+        class="pt-2"
+      ></b-form-radio-group>
     </b-form-group>
     <b-button variant="primary" @click="update()">Update User Info</b-button>
   </div>
@@ -34,6 +46,7 @@ export default {
         password: "",
         role: "",
       },
+      roles: [],
     };
   },
   methods: {
@@ -73,9 +86,21 @@ export default {
         solid: true,
       });
     },
+    getRoles() {
+      const url = "http://localhost:3000/api/role/";
+      this.axios
+        .get(url)
+        .then((res) => {
+          this.roles = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mounted() {
     this.getUser();
+    this.getRoles();
   },
 };
 </script>
